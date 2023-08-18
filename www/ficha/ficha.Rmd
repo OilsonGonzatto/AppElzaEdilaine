@@ -1,0 +1,123 @@
+---
+title: "**Encaminhamento**"
+author: "---"
+date: "`r Sys.Date()`"
+output: html_document
+
+params:
+  dados: NA
+---
+
+```{r setup, include=FALSE}
+  knitr::opts_chunk$set(echo = TRUE)
+```
+
+\ 
+
+#### **Nome completo: ** `r params$dados$nomeCompleto` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Sexo: ** `r params$dados$sexo` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Raça/Cor: ** `r params$dados$racaCor` 
+
+#### **Data de nascimento: ** `r params$dados$dataNascimento` (`r params$dados$idade`) &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Nome da mãe: ** `r params$dados$nomeMae`
+
+#### **Município: ** `r params$dados$municipio` &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **UBS: ** `r params$dados$ubs`  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **CNS: ** `r params$dados$cns`
+
+#### **Profissional responsável: ** `r params$dados$profissional`
+
+\ 
+ 
+#### **Dislipidemias** 
+
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **CT:** `r params$dados$dislipidemiaCt` (`r params$dados$dataDislipidemiaCt`); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **TG:** `r params$dados$dislipidemiaTg` (`r params$dados$dataDislipidemiaTg`); 
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **LDL:** `r params$dados$dislipidemiaLdl` (`r params$dados$dataDislipidemiaLdl`);  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **HDL:** `r params$dados$dislipidemiaHdl` (`r params$dados$dataDislipidemiaHdl`)
+
+\ 
+
+#### **Pré-diabetes** 
+
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Glicemia em Jejum:** `r params$dados$preDiabetesGlicemiaJejum` (`r params$dados$dataPreDiabetesGlicemiaJejum`); &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Hb1AC: ** `r params$dados$preDiabetesHb1ac` (`r params$dados$dataPreDiabetesHb1ac`); 
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Teste Oral de Tolerância à Glicose: ** `r params$dados$preDiabetesTesteOralToleranciaGlicose` (`r params$dados$dataPreDiabetesTesteOralToleranciaGlicose`)
+
+\ 
+
+#### **Controle Pressórico** 
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Sistólica:** `r params$dados$pressaoSistolica`; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Diastólica:** `r params$dados$pressaoDiastolica`
+
+\
+
+#### **Taxa de Filtração Glomerular e Função Renal** 
+#### &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; **Classificação:** `r params$dados$tfgClassificacao`
+
+\ 
+
+#### **Estratificação do Risco Cardiovascular Global**
+
+\ 
+
+```{r, results='asis', echo=FALSE}
+  params$dados$riscoCardiovascular
+```
+
+\ 
+
+#### **Estratificação do Risco Metabólico**
+
+\ 
+
+```{r, results='asis', echo=FALSE}
+  params$dados$riscoMetabolico
+```
+
+\ \ \ 
+
+<br><br>
+
+#### **Qual a principal motivaçãopara o encaminhamento para a AAE?**
+
+```{r, results='asis', echo=FALSE}
+  aux = params$dados$motivacaoParaAAE!=''
+  if ( aux ) {
+    cat(params$dados$motivacaoParaAAE)
+  } else {
+    cat('--')
+  }
+```
+
+\ 
+
+#### **Qual o tratamento atualmente instituído (farmacológico e não farmacológico)?**
+
+```{r, results='asis', echo=FALSE}
+  aux = params$dados$tratamentoAtual!=''
+  if ( aux ) {
+    cat(params$dados$tratamentoAtual)
+  } else {
+    cat('--')
+  }
+```
+
+\ 
+
+#### **Quais as dificuldades enfrentadas pela APS no cuidado do usuário?**
+
+```{r, results='asis', echo=FALSE}
+  aux = params$dados$dificuldadesPelaAPS!=''
+  if ( aux ) {
+    cat(params$dados$dificuldadesPelaAPS)
+  } else {
+    cat('--')
+  }
+```
+
+\ 
+
+```{r, results='asis', echo=FALSE}
+  aux = params$dados$na != 20
+  if ( aux ) {
+    resultado = ifelse(params$dados$soma<7,'Idoso Robusto',
+                       ifelse(params$dados$soma<15,'Idoso Potencialmente Frágil',
+                              'Idoso Frágil'))
+    cat('#### **IVCF-20 Pontuação Final**')
+    cat('\n\n')
+    cat(paste0(params$dados$soma,' ( ',resultado,' )'))
+    # knitr::include_graphics("ivcf20.jpg")
+  }
+```
